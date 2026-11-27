@@ -1,13 +1,19 @@
 from backend.services.detector import extract_face
+from backend.services.preprocessor import preprocess_image
 
-# Change this to the path of a real photo with a visible face
 image_path = "test_face.jpg"
 
-print(f"Looking for a face in: {image_path}")
+# 1. Extract the face
+print(f"Step 1: Extracting face from {image_path}...")
 face = extract_face(image_path)
+if not face:
+    print("No face found. Stopping.")
+    exit()
+print(f"   Face size: {face.size[1]}x{face.size[0]} pixels")
 
-if face:
-    face.save("extracted_face.jpg")
-    print("Success! Face detected and saved as 'extracted_face.jpg'")
-else:
-    print("No face detected. Make sure the image has a clearly visible face.")
+# 2. Preprocess it
+print("Step 2: Preprocessing (resize + normalize)...")
+tensor = preprocess_image(face)
+print(f"   Tensor shape: {tensor.shape}")
+print(f"   Value range: {tensor.min().item():.3f} to {tensor.max().item():.3f}")
+print(f"   Data type: {tensor.dtype}")
