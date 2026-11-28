@@ -16,8 +16,8 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument(
     "--model",
-    choices=["baseline", "finetuned"],
-    default="finetuned"
+    choices=["baseline", "finetuned", "large"],
+    default="large"
 )
 args = parser.parse_args()
 
@@ -31,7 +31,8 @@ DATASET_PATH = Path(
 
 MODEL_PATHS = {
     "baseline": Path("models/efficientnet_b0_best.pth"),
-    "finetuned": Path("models/efficientnet_b0_finetuned.pth")
+    "finetuned": Path("models/efficientnet_b0_finetuned.pth"),
+    "large": Path("models/efficientnet_b0_large_best.pth")
 }
 
 MODEL_PATH = MODEL_PATHS[args.model]
